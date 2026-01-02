@@ -1,4 +1,6 @@
 ﻿using RPG_POO.Models;
+using RPG_POO.Models.Heroes;
+using RPG_POO.Models.Monsters;
 using RPG_POO.Services;
 
 namespace RPG_POO
@@ -7,45 +9,31 @@ namespace RPG_POO
     {
         static void Main()
         {
-            Console.WriteLine("TP1 - Fondations POO");
+            Console.WriteLine("TP2 - Combat + Polymorphisme");
             ConsoleUi.Separator();
 
             string heroName = ConsoleUi.AskNonEmpty("Nom du héros : ");
-            Hero hero = new Hero(heroName);
 
-            Console.Write("Niveau du monstre (1..3) : ");
-            string? lvlText = Console.ReadLine();
-            int level = 1;
-            if (!int.TryParse(lvlText, out level)) level = 1;
-            if (level < 1) level = 1;
-            if (level > 3) level = 3;
+            Console.WriteLine("Classe : 1) Warrior  2) Mage  3) Rogue");
+            Console.Write("> ");
+            string? c = Console.ReadLine()?.Trim();
 
-            Monster monster = new Monster("Goblin", level);
-
-            ConsoleUi.Separator();
-            Console.WriteLine("Créés :");
-            Console.WriteLine(hero);
-            Console.WriteLine(monster);
-
-            ConsoleUi.Separator();
-            Console.WriteLine("Test : 1 attaque du héros, puis 1 attaque du monstre");
-            ConsoleUi.Separator();
-
-            int heroDmg = hero.ComputeDamage();
-            monster.TakeDamage(heroDmg);
-            Console.WriteLine($"{hero.Name} attaque et inflige {heroDmg} dégâts bruts.");
-            Console.WriteLine(monster);
-
-            if (monster.IsAlive)
+            Hero hero = c switch
             {
-                int monsterDmg = monster.ComputeDamage();
-                hero.TakeDamage(monsterDmg);
-                Console.WriteLine($"{monster.Name} attaque et inflige {monsterDmg} dégâts bruts.");
-                Console.WriteLine(hero);
-            }
+                "2" => new Mage(heroName),
+                "3" => new Rogue(heroName),
+                _ => new Warrior(heroName)
+            };
 
-            ConsoleUi.Separator();
-            Console.WriteLine("Fin TP1.");
+            Console.WriteLine("Monstre : 1) Goblin  2) Dragon");
+            Console.Write("> ");
+            string? m = Console.ReadLine()?.Trim();
+
+            Monster monster = m == "2"
+                ? new Dragon(level: 1)
+                : new Goblin(level: 1);
+
+            CombatService.Fight(hero, monster);
         }
     }
 }

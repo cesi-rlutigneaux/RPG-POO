@@ -41,3 +41,39 @@ Faire évoluer la base du projet pour introduire :
 ## Extension (facultatif)
 - Ajouter une méthode `PrintStatus()` dans `Character` (ou utiliser `ToString()`).
 - Empêcher un `maxHp` trop bas (ex: forcer min 1).
+
+# TP2 — Combat + Polymorphisme
+
+## Objectif
+Faire un vrai combat tour par tour en utilisant :
+- `virtual/override` (polymorphisme)
+- des classes spécialisées (Warrior/Mage/Rogue, Goblin/Dragon)
+- un `CombatService` pour ne pas tout mettre dans `Program.cs`
+
+## Travail demandé
+1) Transformer `Hero` et `Monster` en classes abstraites.
+2) Créer 3 héros :
+   - `Warrior` : action spéciale = coup puissant (+4 dégâts bruts)
+   - `Mage` : mana + sort si mana
+   - `Rogue` : critique 25% + action spéciale double frappe
+3) Créer 2 monstres :
+   - `Goblin` : action spéciale (+2 dégâts bruts)
+   - `Dragon` : dégâts plus élevés + souffle
+4) Implémenter `CombatService.Fight(hero, monster)` :
+   - boucle tant que les 2 sont vivants
+   - choix héros (attaque ou spécial)
+   - monstre : 20% chance d’utiliser spécial
+5) Dans `Program.cs` :
+   - demander le nom
+   - demander la classe du héros
+   - demander le monstre
+   - lancer le combat
+
+## Contraintes
+- Pas de `if (hero is Mage) ...` pour gérer les comportements :
+  on veut du polymorphisme (`override`).
+- Le combat doit être jouable et afficher des logs simples.
+
+## Extension (facultatif)
+- Afficher un récapitulatif du tour
+- Ajouter une option "se soigner" (sera fait au TP3 avec les potions)

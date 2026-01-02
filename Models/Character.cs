@@ -14,7 +14,7 @@ namespace RPG_POO.Models
         public int Attack { get; protected set; }
         public int Defense { get; protected set; }
 
-        protected static readonly Random Rng = new Random();
+        public static readonly Random Rng = new Random();
 
         protected Character(string name, int maxHp, int attack, int defense)
         {
