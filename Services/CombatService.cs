@@ -1,4 +1,5 @@
 ﻿using RPG_POO.Models;
+using RPG_POO.Models.Items;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,11 +23,16 @@ namespace RPG_POO.Services
                 Console.WriteLine($"Tour {turn}");
 
                 // Tour héros
-                Console.WriteLine("(A)ttaque  (S)pécial");
+                Console.WriteLine("(A)ttaque  (S)pécial  (P)otion");
                 Console.Write("> ");
                 string? choice = Console.ReadLine()?.Trim().ToUpperInvariant();
 
-                if (choice == "S")
+                if (choice == "P")
+                {
+                    bool used = hero.UsePotion();
+                    Console.WriteLine(used ? "Potion utilisée." : "Aucune potion disponible.");
+                }
+                else if (choice == "S")
                 {
                     hero.SpecialAction(monster);
                     Console.WriteLine($"{hero.Name} utilise une action spéciale !");
@@ -61,8 +67,26 @@ namespace RPG_POO.Services
                 turn++;
             }
 
-            Console.WriteLine(hero.IsAlive ? "Victoire du héros !" : "Défaite du héros...");
+            bool heroWon = hero.IsAlive;
+            Console.WriteLine(heroWon ? "Victoire du héros !" : "Défaite du héros...");
             ConsoleUi.Separator();
+
+            if (heroWon)
+            {
+                Item? drop = LootService.TryDrop(monster);
+                if (drop != null)
+                {
+                    LootService.GiveToHero(hero, drop);
+                    Console.WriteLine($"Butin obtenu : {drop}");
+                }
+                else
+                {
+                    Console.WriteLine("Aucun butin cette fois.");
+                }
+
+                Console.WriteLine($"Inventaire : {hero.Inventory.Items.Count} objet(s).");
+                ConsoleUi.Separator();
+            }
         }
     }
 }

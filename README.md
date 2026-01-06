@@ -42,6 +42,7 @@ Faire évoluer la base du projet pour introduire :
 - Ajouter une méthode `PrintStatus()` dans `Character` (ou utiliser `ToString()`).
 - Empêcher un `maxHp` trop bas (ex: forcer min 1).
 
+
 # TP2 — Combat + Polymorphisme
 
 ## Objectif
@@ -77,3 +78,45 @@ Faire un vrai combat tour par tour en utilisant :
 ## Extension (facultatif)
 - Afficher un récapitulatif du tour
 - Ajouter une option "se soigner" (sera fait au TP3 avec les potions)
+
+
+# TP3 — Interfaces + Composition (Inventaire / Items / Loot)
+
+## Objectif
+Ajouter des fonctionnalités “jeu” tout en restant POO :
+- Composition : `Inventory`, `Item`, `Weapon`, `Armor`, `Potion`
+- Interfaces : `ILootable` (monstres qui peuvent drop)
+- Équipement : arme/armure qui modifient les stats
+- Potions : soin consommable pendant un combat
+- Loot : obtenir un objet après victoire
+
+## Travail demandé
+1) Créer un dossier `Models/Items` et les classes :
+   - `Item` (abstraite, `Name`)
+   - `Weapon` (`AttackBonus`)
+   - `Armor` (`DefenseBonus`)
+   - `Potion` (`HealAmount`)
+2) Créer `Inventory` (liste d’items, Add/Remove, Items en lecture seule).
+3) Modifier `Hero` :
+   - ajoute un `Inventory`
+   - ajoute `Equip(Weapon)` et `Equip(Armor)`
+   - ajoute `UsePotion()` (consomme la première potion trouvée)
+4) Créer l’interface `ILootable` :
+   - `IReadOnlyList<Item> DropTable`
+5) Modifier `Goblin` et `Dragon` pour implémenter `ILootable` et définir une `DropTable`.
+6) Créer `LootService` :
+   - `TryDrop(monster)` : 60% de chance, retourne un item aléatoire de la DropTable
+   - `GiveToHero(hero, item)` : ajoute à l’inventaire et auto-équipe armes/armures
+7) Modifier `CombatService` :
+   - ajoute l’option (P)otion
+   - si victoire, essayer de loot et afficher le résultat
+
+## Contraintes
+- `Inventory.Items` doit être en lecture seule (IReadOnlyList) côté extérieur.
+- `Hp` reste encapsulé : on soigne via `Heal` et on consomme potion via `UsePotion`.
+- Ne pas mettre toute la logique dans `Program.cs`.
+
+## Extensions (facultatif)
+- Afficher le contenu de l’inventaire à la fin
+- Ajouter une limite d’inventaire (ex: 10 items)
+- Ajouter une potion “Greater” plus rare

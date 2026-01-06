@@ -1,11 +1,20 @@
-﻿using System;
+﻿using RPG_POO.Interfaces;
+using RPG_POO.Models.Items;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace RPG_POO.Models.Monsters
 {
-    public sealed class Dragon : Monster
+    public sealed class Dragon : Monster, ILootable
     {
+        public IReadOnlyList<Item> DropTable { get; } = new List<Item>
+        {
+            new Weapon("Dragon Fang", 3),
+            new Armor("Dragon Scale", 2),
+            new Potion("Greater Potion", 12),
+        };
+
         public Dragon(int level)
             : base(
                 name: "Dragon",
@@ -16,15 +25,11 @@ namespace RPG_POO.Models.Monsters
         }
 
         public override int ComputeDamage()
-        {
-            // plus gros dégâts que la moyenne
-            return Attack + Character.Rng.Next(2, 7); // 2..6
-        }
+            => Attack + Character.Rng.Next(2, 7);
 
         public override void SpecialAction(Character target)
         {
-            // Souffle : très gros dégâts
-            int dmg = 18 + (2 * 1) + Character.Rng.Next(0, 5); // niveau implicite = 1 ici (simple)
+            int dmg = 18 + Character.Rng.Next(0, 5);
             target.TakeDamage(dmg);
         }
     }

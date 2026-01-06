@@ -48,7 +48,7 @@ namespace RPG_POO.Models
 
         public virtual int ComputeDamage()
         {
-            // petit aléa 0..2 pour éviter toujours les mêmes dégâts
+            // petit aléa 0 à 2 pour éviter toujours les mêmes dégâts
             return Attack + Rng.Next(0, 3);
         }
 
