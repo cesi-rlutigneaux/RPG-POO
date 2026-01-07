@@ -66,6 +66,20 @@ namespace RPG_POO.Models
             // Par défaut : rien
         }
 
+        public void RestoreStateFromSave(int maxHp, int hp, int attack, int defense, int progLevel, int progXp)
+        {
+            if (maxHp < 1) maxHp = 1;
+
+            MaxHp = maxHp;
+            Attack = attack < 0 ? 0 : attack;
+            Defense = defense < 0 ? 0 : defense;
+
+            RestoreCurrentHp(hp);
+
+            // Progression
+            Progression.Restore(progLevel, progXp);
+        }
+
         public override string ToString()
             => base.ToString() + $" | Lvl:{Progression.Level} XP:{Progression.Xp}/{Progression.XpToNext}";
     }

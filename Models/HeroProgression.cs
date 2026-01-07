@@ -25,5 +25,14 @@ namespace RPG_POO.Models
 
             return false;
         }
+
+        public void Restore(int level, int xp)
+        {
+            if (level < 1) level = 1;
+            if (xp < 0) xp = 0;
+
+            Level = level;
+            Xp = xp;
+        }
     }
 }

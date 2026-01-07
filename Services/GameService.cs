@@ -56,6 +56,12 @@ namespace RPG_POO.Services
             ConsoleUi.Separator();
             Console.WriteLine(hero.IsAlive ? "Fin de partie." : "GAME OVER.");
             ConsoleUi.Separator();
+
+            if (hero.IsAlive)
+            {
+                SaveService.Save(hero);
+                Console.WriteLine("Sauvegarde effectuée.");
+            }
         }
 
         private static void Explore(Hero hero, int zoneLevel)
@@ -86,6 +92,9 @@ namespace RPG_POO.Services
                 hero.ApplyLevelUp();
                 Console.WriteLine(hero);
             }
+
+            SaveService.Save(hero);
+            Console.WriteLine("Sauvegarde effectuée.");
         }
 
         private static Monster CreateRandomMonster(int zoneLevel)

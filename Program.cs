@@ -10,9 +10,58 @@ namespace RPG_POO
     {
         static void Main()
         {
-            Console.WriteLine("TP4 - Mini RPG jouable");
-            ConsoleUi.Separator();
+            SaveService.EnsureDbCreated();
 
+            while (true)
+            {
+                ConsoleUi.Separator();
+                Console.WriteLine("RPG - TP5 (sauvegarde)");
+                Console.WriteLine("1) Nouvelle partie");
+                Console.WriteLine("2) Reprendre (dernier point de sauvegarde)");
+                Console.WriteLine("3) Supprimer la sauvegarde");
+                Console.WriteLine("4) Quitter");
+                Console.Write("> ");
+
+                string? choice = Console.ReadLine()?.Trim();
+
+                if (choice == "1")
+                {
+                    Hero hero = CreateNewHero();
+                    SaveService.Save(hero); // première sauvegarde
+                    GameService.Run(hero);
+                }
+                else if (choice == "2")
+                {
+                    var hero = SaveService.Load();
+                    if (hero == null)
+                    {
+                        Console.WriteLine("Aucune sauvegarde trouvée.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Sauvegarde chargée : {hero.Name}");
+                        GameService.Run(hero);
+                    }
+                }
+                else if (choice == "3")
+                {
+                    SaveService.DeleteSave();
+                    Console.WriteLine("Sauvegarde supprimée.");
+                }
+                else if (choice == "4")
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Choix invalide.");
+                }
+            }
+        }
+
+        private static Hero CreateNewHero()
+        {
+            ConsoleUi.Separator();
             string heroName = ConsoleUi.AskNonEmpty("Nom du héros : ");
 
             Console.WriteLine("Classe : 1) Warrior  2) Mage  3) Rogue");
@@ -32,7 +81,7 @@ namespace RPG_POO
             hero.Inventory.Add(new Potion("Small Potion", 6));
             hero.Inventory.Add(new Potion("Small Potion", 6));
 
-            GameService.Run(hero);
+            return hero;
         }
     }
 }

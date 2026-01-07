@@ -52,6 +52,14 @@ namespace RPG_POO.Models
             return Attack + Rng.Next(0, 3);
         }
 
+        protected void RestoreCurrentHp(int hp)
+        {
+            if (hp < 0) hp = 0;
+            if (hp > MaxHp) hp = MaxHp;
+
+            Hp = hp;
+        }
+
         public override string ToString()
             => $"{Name} | HP:{Hp}/{MaxHp} ATK:{Attack} DEF:{Defense}";
     }

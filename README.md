@@ -161,3 +161,20 @@ Avoir un jeu console jouable avec :
 - Ajouter une option “se reposer” pour récupérer un peu de HP
 - Ajouter un affichage plus clair des tours
 - Ajouter une rareté sur les loots (plus rare pour les meilleurs objets)
+
+
+# TP5 — Sauvegarde / Chargement (EF Core + SQLite)
+
+## Objectif
+Sauvegarder en base de données :
+- le héros (nom, classe, stats)
+- la progression (niveau + XP)
+- l’inventaire (armes, armures, potions)
+Et permettre de reprendre la partie depuis la dernière sauvegarde.
+
+## Outils
+- EF Core
+- SQLite (fichier `rpg_save.db`)
+
+## Installation (si besoin)
+### Ajouter les packages
