@@ -120,3 +120,44 @@ Ajouter des fonctionnalités “jeu” tout en restant POO :
 - Afficher le contenu de l’inventaire à la fin
 - Ajouter une limite d’inventaire (ex: 10 items)
 - Ajouter une potion “Greater” plus rare
+
+
+# TP4 — Mini RPG jouable (menu + exploration + XP)
+
+## Objectif
+Avoir un jeu console jouable avec :
+- un menu (explorer / afficher héros / inventaire / quitter)
+- exploration avec rencontres aléatoires
+- enchaînement de combats
+- gain d’XP + montée de niveau
+
+## Travail demandé
+1) Créer `HeroProgression` :
+   - `Level`, `Xp`, `XpToNext`
+   - `AddXp(amount)` renvoie `true` si le héros monte de niveau
+2) Modifier `Hero` :
+   - ajouter la propriété `Progression`
+   - ajouter `ApplyLevelUp()` (augmente stats et soigne)
+   - afficher niveau et XP dans `ToString()`
+3) Créer `GameService` :
+   - `Run(hero)` : boucle de menu tant que le héros est vivant
+   - `Explore(hero, zoneLevel)` :
+     - 70% rencontre
+     - crée un monstre aléatoire (Goblin/Dragon) avec `zoneLevel`
+     - lance `CombatService.Fight`
+     - si victoire : donner de l’XP et gérer le level up
+4) Modifier `CombatService` pour renvoyer un `bool` :
+   - `true` si le héros gagne, `false` sinon
+5) Modifier `Program.cs` :
+   - créer le héros + kit de départ
+   - lancer `GameService.Run(hero)`
+
+## Contraintes
+- Le menu doit rester lisible.
+- `Program.cs` ne doit pas contenir toute la logique.
+- Le projet doit être compilable et jouable du début à la fin.
+
+## Extensions (facultatif)
+- Ajouter une option “se reposer” pour récupérer un peu de HP
+- Ajouter un affichage plus clair des tours
+- Ajouter une rareté sur les loots (plus rare pour les meilleurs objets)

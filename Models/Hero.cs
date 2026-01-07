@@ -12,6 +12,8 @@ namespace RPG_POO.Models
         public Weapon? EquippedWeapon { get; private set; }
         public Armor? EquippedArmor { get; private set; }
 
+        public HeroProgression Progression { get; } = new HeroProgression();
+
         protected Hero(string name, int maxHp, int attack, int defense)
             : base(name, maxHp, attack, defense)
         {
@@ -49,9 +51,22 @@ namespace RPG_POO.Models
             return false;
         }
 
+        public void ApplyLevelUp()
+        {
+            MaxHp += 5;
+            Attack += 1;
+            Defense += 1;
+
+            // soin complet après montée de niveau
+            Heal(999);
+        }
+
         public virtual void SpecialAction(Character target)
         {
             // Par défaut : rien
         }
+
+        public override string ToString()
+            => base.ToString() + $" | Lvl:{Progression.Level} XP:{Progression.Xp}/{Progression.XpToNext}";
     }
 }

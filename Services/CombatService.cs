@@ -8,7 +8,7 @@ namespace RPG_POO.Services
 {
     public static class CombatService
     {
-        public static void Fight(Hero hero, Monster monster)
+        public static bool Fight(Hero hero, Monster monster)
         {
             ConsoleUi.Separator();
             Console.WriteLine("COMBAT !");
@@ -87,6 +87,8 @@ namespace RPG_POO.Services
                 Console.WriteLine($"Inventaire : {hero.Inventory.Items.Count} objet(s).");
                 ConsoleUi.Separator();
             }
+
+            return heroWon;
         }
     }
 }
