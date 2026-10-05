@@ -13,10 +13,15 @@ namespace RPG_POO.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var dbPath = Path.Combine(
-                Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..")),
-                "rpg_save.db"
-            );
+            var dbPath = Environment.GetEnvironmentVariable("RPG_DB_PATH");
+            if (string.IsNullOrWhiteSpace(dbPath))
+            {
+                dbPath = Path.Combine(
+                    Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..")),
+                    "rpg_save.db"
+                );
+            }
+
             optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
 

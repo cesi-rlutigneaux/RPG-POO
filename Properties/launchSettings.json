@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "RPG POO": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:61751;http://localhost:61752"
+    }
+  }
+}

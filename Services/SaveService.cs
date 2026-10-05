@@ -43,8 +43,9 @@ namespace RPG_POO.Services
 
             existing.MaxHp = hero.MaxHp;
             existing.Hp = hero.Hp;
-            existing.Attack = hero.Attack;
-            existing.Defense = hero.Defense;
+            // Les bonus d'équipement sont réappliqués au chargement.
+            existing.Attack = hero.Attack - (hero.EquippedWeapon?.AttackBonus ?? 0);
+            existing.Defense = hero.Defense - (hero.EquippedArmor?.DefenseBonus ?? 0);
 
             existing.ProgressLevel = hero.Progression.Level;
             existing.ProgressXp = hero.Progression.Xp;
